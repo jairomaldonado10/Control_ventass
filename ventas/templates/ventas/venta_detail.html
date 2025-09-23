@@ -1,0 +1,28 @@
+{% extends "ventas/base.html" %}
+{% load currency %}
+{% block title %}Detalle de venta{% endblock %}
+{% block content %}
+<h1 class="mb-3">Venta #{{ venta.id }}</h1>
+<ul class="list-group mb-3">
+  <li class="list-group-item"><strong>Fecha:</strong> {{ venta.fecha }}</li>
+  <li class="list-group-item"><strong>Cliente / RUT:</strong>
+    {% if venta.cliente_id %}{{ venta.cliente.nombre }} ({{ venta.cliente.rut }}){% else %}{{ venta.rut_boleta }}{% endif %}
+  </li>
+  <li class="list-group-item"><strong>Total:</strong> ${{ venta.total|clp }}</li>
+</ul>
+<h5>Productos</h5>
+<table class="table table-striped">
+  <thead><tr><th>Producto</th><th class="text-end">Cant.</th><th class="text-end">Precio</th><th class="text-end">Subtotal</th></tr></thead>
+  <tbody>
+  {% for d in venta.detalles.all %}
+    <tr>
+      <td>{{ d.producto.nombre }}</td>
+      <td class="text-end">{{ d.cantidad }}</td>
+      <td class="text-end">${{ d.precio_unitario|clp }}</td>
+      <td class="text-end">${{ d.precio_unitario|mul:d.cantidad|clp }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<a class="btn btn-secondary" href="{% url 'ventas:venta_list' %}">Volver</a>
+{% endblock %}

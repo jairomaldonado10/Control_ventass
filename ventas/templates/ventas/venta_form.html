@@ -1,0 +1,30 @@
+{% extends "ventas/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Nueva venta{% endblock %}
+{% block content %}
+<h1 class="mb-3">Registrar venta</h1>
+<form method="post">
+  {% csrf_token %}
+  <div class="card mb-3">
+    <div class="card-header">Cliente / RUT</div>
+    <div class="card-body">{{ header_form|crispy }}</div>
+  </div>
+  <div class="card mb-3">
+    <div class="card-header">Productos</div>
+    <div class="card-body">
+      {{ formset.management_form }}
+      <table class="table align-middle">
+        <thead><tr><th>Producto</th><th style="width:140px">Cantidad</th></tr></thead>
+        <tbody>
+          {% for form in formset %}
+            <tr><td>{{ form.producto }}</td><td>{{ form.cantidad }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <p class="text-muted">Puedes dejar filas vacías.</p>
+    </div>
+  </div>
+  <a class="btn btn-secondary" href="{% url 'ventas:venta_list' %}">Cancelar</a>
+  <button type="submit" class="btn btn-primary">Guardar venta</button>
+</form>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "ventas/base.html" %}
+{% load currency %}
+{% block title %}Detalle{% endblock %}
+{% block content %}
+<h1 class="mb-3">Detalle de producto</h1>
+<ul class="list-group">
+  <li class="list-group-item"><strong>ID:</strong> {{ object.id }}</li>
+  <li class="list-group-item"><strong>Código:</strong> {{ object.codigo }}</li>
+  <li class="list-group-item"><strong>Nombre:</strong> {{ object.nombre }}</li>
+  <li class="list-group-item"><strong>Precio:</strong> ${{ object.precio|clp }}</li>
+  <li class="list-group-item"><strong>Stock:</strong> {{ object.stock }}</li>
+</ul>
+{% endblock %}
